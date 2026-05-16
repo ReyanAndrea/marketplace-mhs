@@ -2,17 +2,35 @@ const express = require('express')
 const router = express.Router()
 const db = require('../config/db')
 
-// GET semua produk
+// GET semua produk dengan search & filter
 router.get('/', async (req, res) => {
+  const {
+    search,
+    category_id
+  } = req.query
   try {
-    const [rows] = await db.query(`
+    let query = `
       SELECT p.*, u.name as seller_name, c.name as category_name
       FROM products p
       JOIN users u ON p.user_id = u.id
       JOIN categories c ON p.category_id = c.id
       WHERE p.status = 'available'
-      ORDER BY p.created_at DESC
-    `)
+    `
+    const params = []
+
+    if (search) {
+      query += ` AND (p.title LIKE ? OR p.description LIKE ?)`
+      params.push(`%${search}%`, `%${search}%`)
+    }
+
+    if (category_id) {
+      query += ` AND p.category_id = ?`
+      params.push(category_id)
+    }
+
+    query += ` ORDER BY p.created_at DESC`
+
+    const [rows] = await db.query(query, params)
     res.json(rows)
   } catch (err) {
     res.status(500).json({
