@@ -8,6 +8,8 @@ import AddProduct from './pages/AddProduct'
 
 function App() {
   return (
+    <>
+    <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
@@ -15,6 +17,7 @@ function App() {
       <Route path="/products/:id" element={<ProductDetail />} />
       <Route path="/products/add" element={<AddProduct />} />
     </Routes>
+    </>
   )
 }
 
