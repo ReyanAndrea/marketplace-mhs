@@ -53,7 +53,19 @@ router.delete('/products/:id', verifyToken, verifyAdmin, async (req, res) => {
 // DELETE user
 router.delete('/users/:id', verifyToken, verifyAdmin, async (req, res) => {
   try {
+    // Hapus product_images dulu
+    await db.query(`
+      DELETE pi FROM product_images pi
+      JOIN products p ON pi.product_id = p.id
+      WHERE p.user_id = ?
+    `, [req.params.id])
+
+    // Hapus products milik user
+    await db.query('DELETE FROM products WHERE user_id = ?', [req.params.id])
+
+    // Baru hapus usernya
     await db.query('DELETE FROM users WHERE id = ?', [req.params.id])
+
     res.json({
       message: 'User berhasil dihapus'
     })
