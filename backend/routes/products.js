@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../config/db')
+const upload = require('../middleware/upload')
 
 // GET semua produk dengan search & filter
 router.get('/', async (req, res) => {
@@ -10,7 +11,8 @@ router.get('/', async (req, res) => {
   } = req.query
   try {
     let query = `
-      SELECT p.*, u.name as seller_name, c.name as category_name
+      SELECT p.*, u.name as seller_name, c.name as category_name,
+      (SELECT image_url FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as image
       FROM products p
       JOIN users u ON p.user_id = u.id
       JOIN categories c ON p.category_id = c.id
@@ -43,7 +45,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const [rows] = await db.query(`
-      SELECT p.*, u.name as seller_name, u.phone as seller_phone, c.name as category_name
+      SELECT p.*, u.name as seller_name, u.phone as seller_phone, c.name as category_name,
+      (SELECT image_url FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as image
       FROM products p
       JOIN users u ON p.user_id = u.id
       JOIN categories c ON p.category_id = c.id
@@ -60,8 +63,8 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// POST tambah produk baru
-router.post('/', async (req, res) => {
+// POST tambah produk + upload foto
+router.post('/', upload.single('image'), async (req, res) => {
   const {
     user_id,
     category_id,
@@ -75,9 +78,19 @@ router.post('/', async (req, res) => {
       INSERT INTO products (user_id, category_id, title, description, price, \`condition\`)
       VALUES (?, ?, ?, ?, ?, ?)
     `, [user_id, category_id, title, description, price, condition])
+
+    const productId = result.insertId
+
+    if (req.file) {
+      await db.query(
+        'INSERT INTO product_images (product_id, image_url, is_primary) VALUES (?, ?, 1)',
+        [productId, req.file.filename]
+      )
+    }
+
     res.json({
       message: 'Produk berhasil ditambahkan',
-      id: result.insertId
+      id: productId
     })
   } catch (err) {
     res.status(500).json({
