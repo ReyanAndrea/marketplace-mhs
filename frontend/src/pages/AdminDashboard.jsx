@@ -66,87 +66,116 @@ function AdminDashboard() {
   }
 
   return (
-    <div style={{ maxWidth: 900, margin: '40px auto', padding: '0 20px' }}>
-      <h2>Admin Dashboard</h2>
-      <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold text-gray-800 mb-2">Admin Dashboard</h2>
+      <p className="text-gray-500 text-sm mb-6">Kelola produk dan user marketplace</p>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+          <p className="text-sm text-blue-500 mb-1">Total Produk</p>
+          <p className="text-3xl font-bold text-blue-700">{products.length}</p>
+        </div>
+        <div className="bg-purple-50 border border-purple-100 rounded-xl p-4">
+          <p className="text-sm text-purple-500 mb-1">Total User</p>
+          <p className="text-3xl font-bold text-purple-700">{users.length}</p>
+        </div>
+      </div>
+
+      {/* Tab */}
+      <div className="flex gap-2 mb-6">
         <button
           onClick={() => setTab('products')}
-          style={{ padding: '8px 20px', background: tab === 'products' ? '#333' : '#eee', color: tab === 'products' ? '#fff' : '#333', border: 'none', borderRadius: 4, cursor: 'pointer' }}
+          className={`px-5 py-2 rounded-lg text-sm font-medium transition ${tab === 'products' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
         >
-          Produk ({products.length})
+          Produk
         </button>
         <button
           onClick={() => setTab('users')}
-          style={{ padding: '8px 20px', background: tab === 'users' ? '#333' : '#eee', color: tab === 'users' ? '#fff' : '#333', border: 'none', borderRadius: 4, cursor: 'pointer' }}
+          className={`px-5 py-2 rounded-lg text-sm font-medium transition ${tab === 'users' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
         >
-          User ({users.length})
+          User
         </button>
       </div>
 
+      {/* Tabel Produk */}
       {tab === 'products' && (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ background: '#f5f5f5' }}>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Judul</th>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Penjual</th>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Harga</th>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Status</th>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map(p => (
-              <tr key={p.id}>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>{p.title}</td>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>{p.seller_name}</td>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>Rp {Number(p.price).toLocaleString('id-ID')}</td>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>{p.status}</td>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>
-                  <button
-                    onClick={() => deleteProduct(p.id)}
-                    style={{ padding: '4px 10px', background: '#e74c3c', color: '#fff', border: 'none', borderRadius: 4, cursor: 'pointer' }}
-                  >
-                    Hapus
-                  </button>
-                </td>
+        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 text-gray-500 text-left">
+              <tr>
+                <th className="px-4 py-3 font-medium">Judul</th>
+                <th className="px-4 py-3 font-medium">Penjual</th>
+                <th className="px-4 py-3 font-medium">Harga</th>
+                <th className="px-4 py-3 font-medium">Status</th>
+                <th className="px-4 py-3 font-medium">Aksi</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      {tab === 'users' && (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ background: '#f5f5f5' }}>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Nama</th>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Email</th>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Kampus</th>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Role</th>
-              <th style={{ padding: 10, textAlign: 'left', border: '1px solid #ddd' }}>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map(u => (
-              <tr key={u.id}>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>{u.name}</td>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>{u.email}</td>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>{u.campus}</td>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>{u.role}</td>
-                <td style={{ padding: 10, border: '1px solid #ddd' }}>
-                  {u.role !== 'admin' && (
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {products.map(p => (
+                <tr key={p.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-3 text-gray-800 font-medium">{p.title}</td>
+                  <td className="px-4 py-3 text-gray-500">{p.seller_name}</td>
+                  <td className="px-4 py-3 text-gray-800">Rp {Number(p.price).toLocaleString('id-ID')}</td>
+                  <td className="px-4 py-3">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${p.status === 'available' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
+                      {p.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
                     <button
-                      onClick={() => deleteUser(u.id)}
-                      style={{ padding: '4px 10px', background: '#e74c3c', color: '#fff', border: 'none', borderRadius: 4, cursor: 'pointer' }}
+                      onClick={() => deleteProduct(p.id)}
+                      className="px-3 py-1 bg-red-500 text-white text-xs rounded-lg hover:bg-red-600 transition"
                     >
                       Hapus
                     </button>
-                  )}
-                </td>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Tabel User */}
+      {tab === 'users' && (
+        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 text-gray-500 text-left">
+              <tr>
+                <th className="px-4 py-3 font-medium">Nama</th>
+                <th className="px-4 py-3 font-medium">Email</th>
+                <th className="px-4 py-3 font-medium">Kampus</th>
+                <th className="px-4 py-3 font-medium">Role</th>
+                <th className="px-4 py-3 font-medium">Aksi</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {users.map(u => (
+                <tr key={u.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-3 text-gray-800 font-medium">{u.name}</td>
+                  <td className="px-4 py-3 text-gray-500">{u.email}</td>
+                  <td className="px-4 py-3 text-gray-500">{u.campus}</td>
+                  <td className="px-4 py-3">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${u.role === 'admin' ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'}`}>
+                      {u.role}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    {u.role !== 'admin' && (
+                      <button
+                        onClick={() => deleteUser(u.id)}
+                        className="px-3 py-1 bg-red-500 text-white text-xs rounded-lg hover:bg-red-600 transition"
+                      >
+                        Hapus
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   )
