@@ -12,19 +12,37 @@ function ProductDetail() {
       .catch(err => console.error(err))
   }, [id])
 
-  if (!product) return <p style={{ textAlign: 'center', marginTop: 80 }}>Loading...</p>
+  if (!product) return <p className="text-center mt-20 text-gray-400">Loading...</p>
+
+  const conditionLabel = (c) => {
+    if (c === 'new') return 'Baru'
+    if (c === 'like_new') return 'Seperti Baru'
+    return 'Bekas'
+  }
 
   return (
-    <div style={{ maxWidth: 600, margin: '60px auto', padding: '0 20px' }}>
-      <h2>{product.title}</h2>
-      <p style={{ color: '#666' }}>{product.category_name} · {product.condition}</p>
-      <h3>Rp {Number(product.price).toLocaleString('id-ID')}</h3>
-      <p>{product.description}</p>
-      <hr />
-      <p><strong>Penjual:</strong> {product.seller_name}</p>
+    <div className="max-w-2xl mx-auto px-4 py-8">
+      {/* Foto Produk */}
+      <div className="bg-gray-100 rounded-xl overflow-hidden mb-6 h-72 flex items-center justify-center">
+        {product.image ? (
+          <img src={`http://localhost:5000/uploads/${product.image}`} alt={product.title} className="w-full h-full object-cover" />
+        ) : (
+          <span className="text-6xl">📦</span>
+        )}
+      </div>
+
+      <div className="flex justify-between items-start mb-2">
+        <h2 className="text-2xl font-bold text-gray-800">{product.title}</h2>
+        <span className="text-sm bg-gray-100 text-gray-500 px-3 py-1 rounded-full">{conditionLabel(product.condition)}</span>
+      </div>
+      <p className="text-blue-500 text-sm mb-4">{product.category_name}</p>
+      <p className="text-2xl font-bold text-gray-900 mb-4">Rp {Number(product.price).toLocaleString('id-ID')}</p>
+      <p className="text-gray-600 mb-6 leading-relaxed">{product.description}</p>
+      <hr className="mb-4" />
+      <p className="text-gray-700 mb-4"><span className="font-semibold">Penjual:</span> {product.seller_name}</p>
       <button
         onClick={() => window.open(`https://wa.me/${product.seller_phone}`, '_blank')}
-        style={{ padding: '10px 20px', background: '#25D366', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer' }}
+        className="w-full py-3 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-600 transition"
       >
         Hubungi via WhatsApp
       </button>

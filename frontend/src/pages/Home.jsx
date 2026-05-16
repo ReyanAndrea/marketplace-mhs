@@ -8,11 +8,10 @@ function Home() {
   const [search, setSearch] = useState('')
   const [categoryId, setCategoryId] = useState('')
 
-  const fetchProducts = () => {
+  const fetchProducts = (searchVal = search, catVal = categoryId) => {
     const params = {}
-    if (search) params.search = search
-    if (categoryId) params.category_id = categoryId
-
+    if (searchVal) params.search = searchVal
+    if (catVal) params.category_id = catVal
     axios.get('http://localhost:5000/api/products', { params })
       .then(res => setProducts(res.data))
       .catch(err => console.error(err))
@@ -33,48 +32,81 @@ function Home() {
     fetchProducts()
   }
 
-  return (
-    <div style={{ maxWidth: 900, margin: '40px auto', padding: '0 20px' }}>
-      <h2>Barang Bekas Mahasiswa</h2>
+  const conditionLabel = (c) => {
+    if (c === 'new') return 'Baru'
+    if (c === 'like_new') return 'Seperti Baru'
+    return 'Bekas'
+  }
 
-      {/* Search & Filter */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
-        <form onSubmit={handleSearch} style={{ display: 'flex', gap: 8, flex: 1 }}>
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      {/* Hero */}
+      <div className="bg-blue-600 text-white rounded-2xl px-8 py-10 mb-8">
+        <h1 className="text-3xl font-bold mb-2">Jual Beli Barang Bekas Mahasiswa</h1>
+        <p className="text-blue-100 mb-6">Temukan barang bekas berkualitas dari sesama mahasiswa</p>
+        <form onSubmit={handleSearch} className="flex gap-2">
           <input
             type="text"
             placeholder="Cari barang..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            style={{ flex: 1, padding: '8px 12px', border: '1px solid #ddd', borderRadius: 4 }}
+            className="flex-1 px-4 py-2 rounded-lg text-gray-800 outline-none"
           />
-          <button type="submit" style={{ padding: '8px 16px' }}>Cari</button>
+          <button type="submit" className="px-6 py-2 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition">
+            Cari
+          </button>
         </form>
-        <select
-          value={categoryId}
-          onChange={e => setCategoryId(e.target.value)}
-          style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 4 }}
-        >
-          <option value="">Semua Kategori</option>
-          {categories.map(c => (
-            <option key={c.id} value={c.id}>{c.name}</option>
-          ))}
-        </select>
       </div>
 
-      {/* Produk Grid */}
-      {products.length === 0 && <p>Belum ada produk bre.</p>}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
-        {products.map(p => (
-          <Link to={`/products/${p.id}`} key={p.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 12 }}>
-              <h4 style={{ margin: '0 0 8px' }}>{p.title}</h4>
-              <p style={{ margin: '0 0 4px', color: '#666', fontSize: 13 }}>{p.category_name}</p>
-              <p style={{ margin: '0 0 4px', fontWeight: 'bold' }}>Rp {Number(p.price).toLocaleString('id-ID')}</p>
-              <p style={{ margin: 0, fontSize: 12, color: '#888' }}>{p.condition} · {p.seller_name}</p>
-            </div>
-          </Link>
+      {/* Filter Kategori */}
+      <div className="flex gap-2 flex-wrap mb-6">
+        <button
+          onClick={() => setCategoryId('')}
+          className={`px-4 py-2 rounded-full text-sm border transition ${categoryId === '' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'}`}
+        >
+          Semua
+        </button>
+        {categories.map(c => (
+          <button
+            key={c.id}
+            onClick={() => setCategoryId(String(c.id))}
+            className={`px-4 py-2 rounded-full text-sm border transition ${categoryId === String(c.id) ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'}`}
+          >
+            {c.name}
+          </button>
         ))}
       </div>
+
+      {/* Grid Produk */}
+      {products.length === 0 ? (
+        <div className="text-center py-20 text-gray-400">
+          <p className="text-5xl mb-4">📦</p>
+          <p className="text-lg">Belum ada produk</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {products.map(p => (
+            <Link to={`/products/${p.id}`} key={p.id} className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition">
+              <div className="bg-gray-100 h-36 flex items-center justify-center overflow-hidden">
+  {p.image ? (
+    <img src={`http://localhost:5000/uploads/${p.image}`} alt={p.title} className="w-full h-full object-cover" />
+  ) : (
+    <span className="text-4xl">📦</span>
+  )}
+</div>
+              <div className="p-3">
+                <p className="text-xs text-blue-500 mb-1">{p.category_name}</p>
+                <h3 className="font-semibold text-gray-800 text-sm mb-1 line-clamp-2">{p.title}</h3>
+                <p className="font-bold text-gray-900 text-sm">Rp {Number(p.price).toLocaleString('id-ID')}</p>
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-xs text-gray-400">{p.seller_name}</span>
+                  <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{conditionLabel(p.condition)}</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
