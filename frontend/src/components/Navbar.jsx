@@ -10,7 +10,7 @@ function Navbar() {
     navigate('/login')
   }
 
-  return (
+   return (
     <nav style={{ padding: '12px 24px', borderBottom: '1px solid #ddd', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <Link to="/" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: 18 }}>
         Marketplace Mhs
@@ -19,6 +19,11 @@ function Navbar() {
         {user ? (
           <>
             <span style={{ fontSize: 14 }}>Halo, {user.name}</span>
+            {user.role === 'admin' && (
+              <Link to="/admin">
+                <button style={{ padding: '6px 14px' }}>Dashboard Admin</button>
+              </Link>
+            )}
             <Link to="/products/add">
               <button style={{ padding: '6px 14px' }}>+ Jual Barang</button>
             </Link>
