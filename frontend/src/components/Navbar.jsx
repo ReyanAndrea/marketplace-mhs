@@ -11,35 +11,51 @@ function Navbar() {
   }
 
    return (
-    <nav style={{ padding: '12px 24px', borderBottom: '1px solid #ddd', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <Link to="/" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: 18 }}>
-        Marketplace Mhs
+    <nav className="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
+      <Link to="/" className="text-xl font-bold text-blue-600">
+        🎓 Marketplace Mhs
       </Link>
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+      <div className="flex items-center gap-3">
         {user ? (
           <>
-            <span style={{ fontSize: 14 }}>Halo, {user.name}</span>
+            <span className="text-sm text-gray-600">Halo, <span className="font-semibold">{user.name}</span></span>
             {user.role === 'admin' && (
               <Link to="/admin">
-                <button style={{ padding: '6px 14px' }}>Dashboard Admin</button>
+                <button className="px-4 py-2 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+                  Dashboard Admin
+                </button>
               </Link>
             )}
             <Link to="/products/add">
-              <button style={{ padding: '6px 14px' }}>+ Jual Barang</button>
+              <button className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                + Jual Barang
+              </button>
             </Link>
-            <button onClick={handleLogout} style={{ padding: '6px 14px', background: '#e74c3c', color: '#fff', border: 'none', borderRadius: 4, cursor: 'pointer' }}>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+            >
               Logout
             </button>
           </>
         ) : (
           <>
-            <Link to="/login"><button style={{ padding: '6px 14px' }}>Login</button></Link>
-            <Link to="/register"><button style={{ padding: '6px 14px' }}>Register</button></Link>
+            <Link to="/login">
+              <button className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                Login
+              </button>
+            </Link>
+            <Link to="/register">
+              <button className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Register
+              </button>
+            </Link>
           </>
         )}
       </div>
     </nav>
   )
+
 }
 
 export default Navbar
