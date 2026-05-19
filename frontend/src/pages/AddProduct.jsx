@@ -9,7 +9,7 @@ function AddProduct() {
   const [categories, setCategories] = useState([])
   const [error, setError] = useState('')
   const navigate = useNavigate()
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(sessionStorage.getItem('user'))
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/categories')
