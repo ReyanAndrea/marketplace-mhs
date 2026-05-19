@@ -2,18 +2,18 @@ import { useNavigate, Link } from 'react-router-dom'
 
 function Navbar() {
   const navigate = useNavigate()
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(sessionStorage.getItem('user'))
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('user')
     navigate('/login')
   }
 
    return (
     <nav className="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
       <Link to="/" className="text-xl font-bold text-blue-600">
-        🎓 Marketplace Mhs
+        🎓 Marketplace Mahasiswa
       </Link>
       <div className="flex items-center gap-3">
         {user ? (
