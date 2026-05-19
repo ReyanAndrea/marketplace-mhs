@@ -117,8 +117,11 @@ marketplace-mhs/
 
 ---
 
-Dibuat oleh Kelompok 09
-**Reyan Andrea** 2208107010014
-**rijal** 24081070100xx
-**fikri** 24081070100xx
-**rajabi** 24081070100xx
+## 👥 Kelompok 09
+
+| NPM           | Nama Anggota |
+| ------------- | ------------ |
+| 2208107010014 | Reyan Andrea |
+| 24081070100xx | Rijal        |
+| 24081070100xx | Fikri        |
+| 24081070100xx | Rajabi       |
