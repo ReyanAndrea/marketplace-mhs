@@ -7,8 +7,8 @@ function AdminDashboard() {
   const [users, setUsers] = useState([])
   const [tab, setTab] = useState('products')
   const navigate = useNavigate()
-  const user = JSON.parse(localStorage.getItem('user'))
-  const token = localStorage.getItem('token')
+  const user = JSON.parse(sessionStorage.getItem('user'))
+  const token = sessionStorage.getItem('token')
 
   useEffect(() => {
     if (!user || user.role !== 'admin') {
