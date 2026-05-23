@@ -55,3 +55,11 @@ INSERT INTO categories (name, slug) VALUES
 ('Perabot Kos', 'perabot-kos'),
 ('Pakaian', 'pakaian'),
 ('Lainnya', 'lainnya');
+
+-- Password: admin123
+INSERT INTO users (name, email, password, role) VALUES (
+  'Admin',
+  'admin@gmail.com',
+  '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.',
+  'admin'
+);
