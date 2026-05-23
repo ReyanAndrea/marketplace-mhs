@@ -1,15 +1,15 @@
-# 🎓 Marketplace Barang Bekas Mahasiswa
+# Marketplace Barang Bekas Mahasiswa
 
 Platform jual beli barang bekas khusus mahasiswa. Dibuat sebagai proyek UAS mata kuliah Pemrograman Berbasis Web.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: React.js + Vite + Tailwind CSS
 - **Backend**: Node.js + Express.js
 - **Database**: MySQL (XAMPP)
 - **Auth**: JWT + Bcrypt
 
-## ✨ Fitur
+## Fitur
 
 - Register & Login (JWT Authentication)
 - Lihat daftar produk dengan foto
@@ -20,7 +20,7 @@ Platform jual beli barang bekas khusus mahasiswa. Dibuat sebagai proyek UAS mata
 - Admin dashboard (kelola produk & user)
 - Logout & multi-session per tab
 
-## 🚀 Cara Menjalankan
+## Cara Menjalankan
 
 ### Persiapan
 
@@ -77,14 +77,14 @@ npm run dev
 - Frontend: `http://localhost:5173`
 - Backend: `http://localhost:5000`
 
-## 👤 Role User
+## Role User
 
 | Role  | Akses                                      |
 | ----- | ------------------------------------------ |
 | user  | Lihat produk, jual barang, hubungi penjual |
 | admin | Semua akses user + kelola produk & user    |
 
-## 📁 Struktur Folder
+## Struktur Folder
 
 ```
 marketplace-mhs/
@@ -100,7 +100,7 @@ marketplace-mhs/
         └── pages/       # Halaman aplikasi
 ```
 
-## 📝 API Endpoints
+## API Endpoints
 
 | Method | Endpoint                | Deskripsi            |
 | ------ | ----------------------- | -------------------- |
@@ -117,7 +117,7 @@ marketplace-mhs/
 
 ---
 
-## 👥 Kelompok 09
+## Kelompok 09
 
 | NPM           | Nama Anggota |
 | ------------- | ------------ |
