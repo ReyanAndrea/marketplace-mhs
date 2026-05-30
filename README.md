@@ -122,6 +122,6 @@ marketplace-mhs/
 | NPM           | Nama Anggota |
 | ------------- | ------------ |
 | 2208107010014 | Reyan Andrea |
-| 24081070100xx | Rijal        |
+| 2408107010008 | Rijal        |
 | 24081070100xx | Fikri        |
 | 24081070100xx | Rajabi       |
