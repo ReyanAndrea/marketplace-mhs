@@ -24,6 +24,8 @@ app.use('/api/auth', authRoutes)
 app.use('/api/categories', categoryRoutes)
 app.use('/api/admin', adminRoutes)
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server nyala di port ${process.env.PORT}`)
-})
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server nyala di port ${PORT}`);
+});
