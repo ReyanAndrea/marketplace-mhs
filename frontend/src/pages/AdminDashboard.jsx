@@ -77,8 +77,8 @@ function AdminDashboard() {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-end mb-10">
           <div>
-            <h2 className="text-5xl font-black text-black uppercase tracking-tighter mb-2" style={{ textShadow: '4px 4px 0px rgba(0,0,0,1)' }}>
-              <span className="text-white">ADMIN</span> DASHBOARD
+            <h2 className="text-5xl font-black text-white uppercase tracking-tighter mb-2" style={{ textShadow: '4px 4px 0px rgba(0,0,0,1)' }}>
+              ADMIN DASHBOARD
             </h2>
             <div className="bg-[#FFE800] border-4 border-black px-4 py-2 font-bold inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
               SYSTEM CONTROL PANEL
