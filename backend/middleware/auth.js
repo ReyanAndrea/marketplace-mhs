@@ -10,7 +10,8 @@ const verifyToken = (req, res, next) => {
     error: 'Token tidak ada'
   })
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const secretKey = process.env.JWT_SECRET || 'rahasia'
+    const decoded = jwt.verify(token, secretKey)
     req.user = decoded
     next()
   } catch (err) {
